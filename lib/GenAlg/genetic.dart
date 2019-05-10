@@ -58,25 +58,30 @@ class _GenAlgPageState extends State<GenAlgPage> {
     if (_computeButtonEnable) {
       _computeButtonState = () {
         
-        fitPerson = [];
-        while (lsEqual(fitPerson, [])) {
-          try {
-            var t1 = DateTime.now().millisecondsSinceEpoch;
-            setState(() => fitPerson = geneticSearch());
-            setState(() => geneticTime = DateTime.now().millisecondsSinceEpoch - t1);
-            var t2 = DateTime.now().millisecondsSinceEpoch;
-            setState(() => enumRes = enumerationSearch());
-            setState(() => enumTime = DateTime.now().millisecondsSinceEpoch - t2);
-            buildResult();
-          } catch (e) {
-            fitPerson = [];
+        if (isNormal()) {
+          fitPerson = [];
+          while (lsEqual(fitPerson, [])) {
+            try {
+              var t1 = DateTime.now().millisecondsSinceEpoch;
+              setState(() => fitPerson = geneticSearch());
+              setState(() => geneticTime = DateTime.now().millisecondsSinceEpoch - t1);
+              var t2 = DateTime.now().millisecondsSinceEpoch;
+              setState(() => enumRes = enumerationSearch());
+              setState(() => enumTime = DateTime.now().millisecondsSinceEpoch - t2);
+              buildResult();
+            } catch (e) {
+              fitPerson = [];
+            }
           }
+        } else {
+          clearStates();
+          setState(() => resultWidgets = [Text("It's not diofant equation", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),)]);
         }
       };
     } else {
       _computeButtonState = null;
     }
-
+    
     return new GestureDetector(
       onTap: () {
         this._dismissKeyboard(context);
@@ -97,6 +102,17 @@ class _GenAlgPageState extends State<GenAlgPage> {
       )
     );
   }
+
+  void clearStates() {    
+    setState(() => resultWidgets= <Widget>[]);
+    setState(() => genWidgets = <Widget>[]);
+    setState(() => geneticTimeWidgets = <Widget>[]);
+    setState(() => enumResultWidgets = <Widget>[]);
+    setState(() => enumTimeWidgets = <Widget>[]);
+    setState(() => enumTitle = "");
+    setState(() => comparedString= "");
+  }
+
 
   Widget _GenContent() {
     return Column(
@@ -122,23 +138,11 @@ class _GenAlgPageState extends State<GenAlgPage> {
                 try {
                   n = int.parse(numb);
                   setState(() => exprWidgets = <Widget>[]);
-                  setState(() => resultWidgets = <Widget>[]);
-                  setState(() => genWidgets = <Widget>[]);
-                  setState(() => geneticTimeWidgets = <Widget>[]);
-                  setState(() => enumResultWidgets = <Widget>[]);
-                  setState(() => enumTimeWidgets = <Widget>[]);
-                  setState(() => enumTitle = "");
-                  setState(() => comparedString= "");
+                  clearStates();
                   buildExpression(n);
                 } catch (e) {
                   setState(() => exprWidgets = <Widget>[]);
-                  setState(() => resultWidgets= <Widget>[]);
-                  setState(() => genWidgets = <Widget>[]);
-                  setState(() => geneticTimeWidgets = <Widget>[]);
-                  setState(() => enumResultWidgets = <Widget>[]);
-                  setState(() => enumTimeWidgets = <Widget>[]);
-                  setState(() => enumTitle = "");
-                  setState(() => comparedString= "");
+                  clearStates();
                   setState(() => result = null);
                   setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
                 }
@@ -470,6 +474,15 @@ class _GenAlgPageState extends State<GenAlgPage> {
     return false;
   }
 
+  bool isNormal() {
+    var s = params.reduce((a, b) => a+b);
+    if (s <= result) {
+      return true;
+    }
+
+    return false;
+  }
+
   List<int> enumerationSearch() {
     String alph = "abcdefghijklmnopqrstuvwxyz";
     List<String> alphabet = alph.split('');
@@ -516,6 +529,9 @@ class _GenAlgPageState extends State<GenAlgPage> {
   }
 
   List<int> geneticSearch() {
+    if (!isNormal()) {
+      
+    }
     int perCount = params.length*2;
     firstGen = generatePopulations(perCount);
     setState(() => currentGen = firstGen);
