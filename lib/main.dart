@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/factorization': (BuildContext context) => new FactorizationPage(),
         '/gen': (BuildContext context) => new GenAlgPage(),
         '/neural': (BuildContext context) => new NeuralPage(),
+        '/testNeural': (BuildContext context) => new TestLearningSpeed(),
       },
     );
   }
