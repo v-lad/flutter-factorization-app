@@ -7,6 +7,7 @@ import 'Neural/neural.dart';
 
 void main() => runApp(MyApp());
 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,13 @@ class MyApp extends StatelessWidget {
       title: 'RTS',
       theme: ThemeData(
         primaryColor: Colors.orange[800],
-        primarySwatch: Colors.deepOrange
+        primarySwatch: Colors.deepOrange,
+
+        // textTheme: TextTheme(
+        //   title: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.orangeAccent[700],),
+        //   supportingText: TextStyle(),
+          
+        // ),
       ),
       home: HomePage(),
       routes: <String, WidgetBuilder> {

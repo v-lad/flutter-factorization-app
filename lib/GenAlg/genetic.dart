@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'dart:collection';
 
+import 'package:rts_factorization/styles.dart';
+import 'package:rts_factorization/widgets.dart';
+
 Function lsEqual = ListEquality().equals;
 
 class GenAlgPage extends StatefulWidget {
@@ -120,12 +123,21 @@ class _GenAlgPageState extends State<GenAlgPage> {
         Container(
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
-            "Count of variables:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-              color: Colors.orangeAccent[700],
-            ),
+            "Solving diofant equations",
+            style: Styles.titleText
+          ),
+        ),
+        PageInfo(
+          text: "There you can solve your diofant equation "
+                "with specified number of variables with help genetic "
+                "algorithm. At the end you can compare performance "
+                "results with simple enumeration.",
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 30),
+          child: Text(
+            "Enter data",
+            style: Styles.subtitleText
           ),
         ),
         Container(
@@ -148,7 +160,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
                 }
               },
               decoration: InputDecoration(
-                labelText: 'Enter here:',
+                labelText: 'Count of variables',
                 // hintText: 'Enter here...',
                 alignLabelWithHint: true,
               ),
@@ -501,7 +513,6 @@ class _GenAlgPageState extends State<GenAlgPage> {
     var curChng = 0;
 
     while (!isFit(temp)) {
-      // enumValues[alphabet[iter]] = val;
       temp = enumValues.values.toList();
       temp[iter] = val;
 
@@ -513,9 +524,6 @@ class _GenAlgPageState extends State<GenAlgPage> {
 
       if (iter == parCount) {
         iter = 0;
-        // for (var i = 0; i < parCount; i++) {
-        //   enumValues[alphabet[i]] = val;
-        // }
         enumValues[alphabet[curChng]]++;
         curChng++;
         if (curChng == parCount) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:rts_factorization/styles.dart';
+import 'package:rts_factorization/widgets.dart';
+
 
 class FactorizationPage extends StatefulWidget {
   @override
@@ -95,13 +98,12 @@ class _FactorizationPageState extends State<FactorizationPage> {
         Container(
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
-            "Enter the number:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Colors.orangeAccent[700],
-            ),
+            "Factorize a number",
+            style: Styles.titleText
           ),
+        ),
+        PageInfo(
+          text: "lorem ipsum",
         ),
         Center(
           child: Column(
