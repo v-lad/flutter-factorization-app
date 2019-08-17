@@ -120,25 +120,16 @@ class _GenAlgPageState extends State<GenAlgPage> {
   Widget _GenContent() {
     return Column(
       children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            "Solving diofant equations",
-            style: Styles.titleText
-          ),
-        ),
+        PageTitle(title: "Solving diofant equations"),
         PageInfo(
-          text: "There you can solve your diofant equation "
+          text: "${'\t'*4}" + "There you can solve your diofant equation "
                 "with specified number of variables with help genetic "
                 "algorithm. At the end you can compare performance "
                 "results with simple enumeration.",
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 30),
-          child: Text(
-            "Enter data",
-            style: Styles.subtitleText
-          ),
+        PageSubtitle(
+          text: "Enter the data:",
+          marginTop: 30,
         ),
         Container(
           child: FractionallySizedBox(
@@ -164,7 +155,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
                 // hintText: 'Enter here...',
                 alignLabelWithHint: true,
               ),
-              style: TextStyle(fontSize: 20, color: Colors.black),
+              style: Styles.inputTextStyle,
               textAlign: TextAlign.center,
             ),
           ),
@@ -382,69 +373,25 @@ class _GenAlgPageState extends State<GenAlgPage> {
               decoration: InputDecoration(
                 hintText:'p${i}',
               ),
-              style: TextStyle(fontSize: 20, color: Colors.black,),
+              style: Styles.inputTextStyle,
               textAlign: TextAlign.end,
             ),
           ),]
         ),
       );
       expression.add(
-        SizedBox(
-          child: FlatButton(
-            child: Text(
-              alphabet[i],
-              style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontStyle: FontStyle.normal
-                ),
-            ),
-            onPressed: null,
-            padding: EdgeInsets.all(0),
-          ),
-          width: 20.0,
-        )
+        SupportFlatButtonText(text: alphabet[i])
       );
 
       if (i != n-1) {
         expression.add(
-          SizedBox(
-            child: FlatButton(
-              child: Text(
-                " + ",
-                style: TextStyle(
-                    // fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal
-                  ),
-              ),
-              onPressed: null,
-              padding: EdgeInsets.all(0),
-            ),
-            width: 20.0,
-          )
+          SupportFlatButtonText(text: " + ")
         );
       }
     }
 
     expression.add(
-      SizedBox(
-        child: FlatButton(
-          child: Text(
-            " = ",
-            style: TextStyle(
-                // fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.black,
-                fontStyle: FontStyle.normal
-              ),
-          ),
-          onPressed: null,
-          padding: EdgeInsets.all(0),
-        ),
-        width: 20.0,
-      )
+      SupportFlatButtonText(text: " = "),
     );
 
     expression.add(Wrap(children: <Widget>[FractionallySizedBox(
@@ -462,7 +409,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
             decoration: InputDecoration(
               hintText: 'N',
             ),
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            style: Styles.inputTextStyle,
           ),
         ),]
       ),

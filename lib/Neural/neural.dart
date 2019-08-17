@@ -12,6 +12,9 @@ import 'package:http/http.dart'
     show BaseRequest, Response, StreamedResponse;
 import 'package:http/io_client.dart';
 
+import '../styles.dart';
+import '../widgets.dart';
+
 class NeuralPage extends StatefulWidget {
 
   // final _DataStorage storage;
@@ -300,36 +303,17 @@ class _NeuralPageState extends State<NeuralPage> {
     // #region Neural Content
     return new Column(
       children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            "Initial data:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-              color: Colors.orangeAccent[700],
-            ),
-          ),
+        PageTitle(title:"Perceptron"),
+        PageInfo(text: "${'\t'*4}" + 'lorem ipsum'),
+        PageSubtitle(
+          text: "Enter the data:",
+          marginTop: 30,
         ),
         
         //#region A
         Wrap(
           children: <Widget>[
-            SizedBox(
-              child: FlatButton(
-                child: Text(
-                  "A: ",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal
-                    ),
-                ),
-                onPressed: null,
-                padding: EdgeInsets.all(0),
-              ),
-              width: 20.0,
-            ),
+            SupportFlatButtonText(text: "A: "),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
@@ -348,7 +332,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     decoration: InputDecoration(
                       hintText:'x1',
                     ),
-                    style: TextStyle(fontSize: 20, color: Colors.black,),
+                    style: Styles.inputTextStyle,
                     textAlign: TextAlign.center,
                   ),
                 ),]
@@ -370,7 +354,7 @@ class _NeuralPageState extends State<NeuralPage> {
                   decoration: InputDecoration(
                     hintText:'x2',
                   ),
-                  style: TextStyle(fontSize: 20, color: Colors.black,),
+                  style: Styles.inputTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),]
@@ -382,21 +366,7 @@ class _NeuralPageState extends State<NeuralPage> {
         //#region B
         Wrap(
           children: <Widget>[
-            SizedBox(
-              child: FlatButton(
-                child: Text(
-                  "B: ",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal
-                    ),
-                ),
-                onPressed: null,
-                padding: EdgeInsets.all(0),
-              ),
-              width: 20.0,
-            ),
+            SupportFlatButtonText(text: "B: "),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
@@ -415,7 +385,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     decoration: InputDecoration(
                       hintText:'x1',
                     ),
-                    style: TextStyle(fontSize: 20, color: Colors.black,),
+                    style: Styles.inputTextStyle,
                     textAlign: TextAlign.center,
                   ),
                 ),]
@@ -437,7 +407,7 @@ class _NeuralPageState extends State<NeuralPage> {
                   decoration: InputDecoration(
                     hintText:'x2',
                   ),
-                  style: TextStyle(fontSize: 20, color: Colors.black,),
+                  style: Styles.inputTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),]
@@ -449,21 +419,7 @@ class _NeuralPageState extends State<NeuralPage> {
         //#region C
         Wrap(
           children: <Widget>[
-            SizedBox(
-              child: FlatButton(
-                child: Text(
-                  "C: ",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal
-                    ),
-                ),
-                onPressed: null,
-                padding: EdgeInsets.all(0),
-              ),
-              width: 20.0,
-            ),
+            SupportFlatButtonText(text: "C: "),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
@@ -482,7 +438,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     decoration: InputDecoration(
                       hintText:'x1',
                     ),
-                    style: TextStyle(fontSize: 20, color: Colors.black,),
+                    style: Styles.inputTextStyle,
                     textAlign: TextAlign.center,
                   ),
                 ),]
@@ -504,7 +460,7 @@ class _NeuralPageState extends State<NeuralPage> {
                   decoration: InputDecoration(
                     hintText:'x2',
                   ),
-                  style: TextStyle(fontSize: 20, color: Colors.black,),
+                  style: Styles.inputTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),]
@@ -516,21 +472,7 @@ class _NeuralPageState extends State<NeuralPage> {
         //#region D
         Wrap(
           children: <Widget>[
-            SizedBox(
-              child: FlatButton(
-                child: Text(
-                  "D: ",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal
-                    ),
-                ),
-                onPressed: null,
-                padding: EdgeInsets.all(0),
-              ),
-              width: 20.0,
-            ),
+            SupportFlatButtonText(text: "D: "),
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
@@ -549,7 +491,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     decoration: InputDecoration(
                       hintText:'x1',
                     ),
-                    style: TextStyle(fontSize: 20, color: Colors.black,),
+                    style: Styles.inputTextStyle,
                     textAlign: TextAlign.center,
                   ),
                 ),]
@@ -571,7 +513,7 @@ class _NeuralPageState extends State<NeuralPage> {
                   decoration: InputDecoration(
                     hintText:'x2',
                   ),
-                  style: TextStyle(fontSize: 20, color: Colors.black,),
+                  style: Styles.inputTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),]
@@ -585,21 +527,7 @@ class _NeuralPageState extends State<NeuralPage> {
           margin: const EdgeInsets.only(top: 20, bottom: 20),
           child: Wrap(
             children: <Widget>[
-              SizedBox(
-                child: FlatButton(
-                  child: Text(
-                    "P: ",
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal
-                      ),
-                  ),
-                  onPressed: null,
-                  padding: EdgeInsets.all(0),
-                ),
-                width: 20.0,
-              ),
+              SupportFlatButtonText(text: "P: "),
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
@@ -633,21 +561,7 @@ class _NeuralPageState extends State<NeuralPage> {
             // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                child: FlatButton(
-                  child: Text(
-                    "δ: ",
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal
-                      ),
-                  ),
-                  onPressed: null,
-                  padding: EdgeInsets.all(0),
-                ),
-                width: 20.0,
-              ),
+              SupportFlatButtonText(text: "δ: "),
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
@@ -716,7 +630,7 @@ class _NeuralPageState extends State<NeuralPage> {
                       decoration: InputDecoration(
                         hintText:'ms',
                       ),
-                      style: TextStyle(fontSize: 20, color: Colors.black,),
+                      style: Styles.inputTextStyle,
                       textAlign: TextAlign.center,
                       enabled: dlValue,
                     ),

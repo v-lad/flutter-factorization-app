@@ -95,15 +95,9 @@ class _FactorizationPageState extends State<FactorizationPage> {
   Widget _FPContent() {
     return Column(
       children: <Widget> [
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            "Factorize a number",
-            style: Styles.titleText
-          ),
-        ),
+        PageTitle(title: "Factorize a number"),
         PageInfo(
-          text: "lorem ipsum",
+          text: "${'\t'*4}" + "lorem ipsum",
         ),
         Center(
           child: Column(
@@ -121,7 +115,7 @@ class _FactorizationPageState extends State<FactorizationPage> {
                     // hintText: 'Enter here...',
                     alignLabelWithHint: true,
                   ),
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: Styles.inputTextStyle,
                 ),
               ),
               Container(
@@ -145,24 +139,10 @@ class _FactorizationPageState extends State<FactorizationPage> {
             ],
           )
         ),
-        ListView.builder(
-          itemBuilder: (context, i) {
-            return ListTile(
-              title: Center(
-                child: Text(
-                  primes[i],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
-                ),
-              )
-            );
-          },
-          itemCount: primes.length,                      
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-        ),
+        PageInfo(
+          text: primes.join(';  ') + '.',
+          style: Styles.resultBoldTextStyle,
+        )
       ],
     );
   }
