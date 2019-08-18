@@ -76,6 +76,7 @@ class _FactorizationPageState extends State<FactorizationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Factorization'),
@@ -97,51 +98,30 @@ class _FactorizationPageState extends State<FactorizationPage> {
       children: <Widget> [
         PageTitle(title: "Factorize a number"),
         PageInfo(
-          text: "${'\t'*4}" + "lorem ipsum",
+          text: "${'\t'*4}" + "lorem ipsum dolor sit amet",
         ),
         Center(
           child: Column(
             children: <Widget>[
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: TextField(
-                  autofocus: true,
-                  keyboardType: TextInputType.number,
-                  onChanged: (numb) {
-                    n = int.parse(numb);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Enter here...',
-                    // hintText: 'Enter here...',
-                    alignLabelWithHint: true,
-                  ),
-                  style: Styles.inputTextStyle,
-                ),
+              CustomTextInput(
+                onChanged: (numb) { n = int.parse(numb); },
+                label: 'Input a number',
+                autofocus: true,
+                alignLabel: true,
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: RaisedButton(
-                  child: const Text(
-                    'Compute',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  color: Theme.of(context).accentColor,
-                  elevation: 1.0,
-                  splashColor: Colors.limeAccent,
-                  onPressed: () {
-                    factorizeNumber(n);
-                  },
-                ),
+
+              ActionRoundedButton(
+                name: 'Compute',
+                onPressed: () { factorizeNumber(n); },
               ),
             ],
           )
         ),
         PageInfo(
-          text: primes.join(';  ') + '.',
+          text: primes.join(';  ') + (primes.length != 0 ? '.' : ''),
           style: Styles.resultBoldTextStyle,
+          align: TextAlign.center,
+          isSizeMin: true,
         )
       ],
     );

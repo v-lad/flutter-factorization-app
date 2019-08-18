@@ -282,6 +282,7 @@ class _NeuralPageState extends State<NeuralPage> {
     }
     
     return new Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar (
         title: Text('Neural networks'),
       ),
@@ -317,47 +318,36 @@ class _NeuralPageState extends State<NeuralPage> {
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
-                children: <Widget>[FractionallySizedBox(
-                  widthFactor: 0.15,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (numb) {
-                      try{
-                        A[0] = int.parse(numb);
-                      } catch (e) {
-                        A[0] = null;
-                      }
-                      checkState();
-                    },
-                    decoration: InputDecoration(
-                      hintText:'x1',
-                    ),
-                    style: Styles.inputTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),]
-              ),
-            ),
-            Wrap(              
-              children: <Widget>[FractionallySizedBox(
-                widthFactor: 0.15,
-                child: TextField(
-                  keyboardType: TextInputType.number,
+                children: <Widget>[CustomTextInput(
                   onChanged: (numb) {
                     try{
-                      A[1] = int.parse(numb);
+                      A[0] = int.parse(numb);
                     } catch (e) {
-                      A[1] = null;
+                      A[0] = null;
                     }
                     checkState();
                   },
-                  decoration: InputDecoration(
-                    hintText:'x2',
-                  ),
-                  style: Styles.inputTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),]
+                  wFactor: 0.15,
+                  hint: 'x1',
+                  align: TextAlign.center,
+                )]
+              ),
+            ),
+
+            Wrap(              
+              children: <Widget>[CustomTextInput(
+                onChanged: (numb) {
+                  try{
+                    A[1] = int.parse(numb);
+                  } catch (e) {
+                    A[1] = null;
+                  }
+                  checkState();
+                },
+                wFactor: 0.15,
+                hint: 'x2',
+                align: TextAlign.center,
+              )]
             ),
           ],
         ),
@@ -370,11 +360,8 @@ class _NeuralPageState extends State<NeuralPage> {
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
-                children: <Widget>[FractionallySizedBox(
-                  widthFactor: 0.15,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (numb) {
+                children: <Widget>[CustomTextInput(
+                  onChanged: (numb) {
                       try{
                         B[0] = int.parse(numb);
                       } catch (e) {
@@ -382,20 +369,15 @@ class _NeuralPageState extends State<NeuralPage> {
                       }
                       checkState();
                     },
-                    decoration: InputDecoration(
-                      hintText:'x1',
-                    ),
-                    style: Styles.inputTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),]
+                  wFactor: 0.15,
+                  hint: 'x1',
+                  align: TextAlign.center,
+                )]
               ),
             ),
+
             Wrap(              
-              children: <Widget>[FractionallySizedBox(
-                widthFactor: 0.15,
-                child: TextField(
-                  keyboardType: TextInputType.number,
+              children: <Widget>[CustomTextInput(
                   onChanged: (numb) {
                     try{
                       B[1] = int.parse(numb);
@@ -404,13 +386,10 @@ class _NeuralPageState extends State<NeuralPage> {
                     }
                     checkState();
                   },
-                  decoration: InputDecoration(
-                    hintText:'x2',
-                  ),
-                  style: Styles.inputTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),]
+                  wFactor: 0.15,
+                  hint: 'x2',
+                  align: TextAlign.center,
+              )]
             ),
           ],
         ),
@@ -423,11 +402,8 @@ class _NeuralPageState extends State<NeuralPage> {
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
-                children: <Widget>[FractionallySizedBox(
-                  widthFactor: 0.15,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (numb) {
+                children: <Widget>[CustomTextInput(
+                  onChanged: (numb) {
                       try{
                         C[0] = int.parse(numb);
                       } catch (e) {
@@ -435,20 +411,15 @@ class _NeuralPageState extends State<NeuralPage> {
                       }
                       checkState();
                     },
-                    decoration: InputDecoration(
-                      hintText:'x1',
-                    ),
-                    style: Styles.inputTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),]
+                  wFactor: 0.15,
+                  hint: 'x1',
+                  align: TextAlign.center,
+                )]
               ),
             ),
+
             Wrap(              
-              children: <Widget>[FractionallySizedBox(
-                widthFactor: 0.15,
-                child: TextField(
-                  keyboardType: TextInputType.number,
+              children: <Widget>[CustomTextInput(
                   onChanged: (numb) {
                     try{
                       C[1] = int.parse(numb);
@@ -457,13 +428,10 @@ class _NeuralPageState extends State<NeuralPage> {
                     }
                     checkState();
                   },
-                  decoration: InputDecoration(
-                    hintText:'x2',
-                  ),
-                  style: Styles.inputTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),]
+                  wFactor: 0.15,
+                  hint: 'x2',
+                  align: TextAlign.center,
+              )]
             ),
           ],
         ),
@@ -476,11 +444,8 @@ class _NeuralPageState extends State<NeuralPage> {
             Container(
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: Wrap(
-                children: <Widget>[FractionallySizedBox(
-                  widthFactor: 0.15,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (numb) {
+                children: <Widget>[CustomTextInput(
+                  onChanged: (numb) {
                       try{
                         D[0] = int.parse(numb);
                       } catch (e) {
@@ -488,20 +453,14 @@ class _NeuralPageState extends State<NeuralPage> {
                       }
                       checkState();
                     },
-                    decoration: InputDecoration(
-                      hintText:'x1',
-                    ),
-                    style: Styles.inputTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                ),]
+                  wFactor: 0.15,
+                  hint: 'x1',
+                  align: TextAlign.center,
+                )]
               ),
             ),
             Wrap(              
-              children: <Widget>[FractionallySizedBox(
-                widthFactor: 0.15,
-                child: TextField(
-                  keyboardType: TextInputType.number,
+              children: <Widget>[CustomTextInput(
                   onChanged: (numb) {
                     try{
                       D[1] = int.parse(numb);
@@ -510,13 +469,10 @@ class _NeuralPageState extends State<NeuralPage> {
                     }
                     checkState();
                   },
-                  decoration: InputDecoration(
-                    hintText:'x2',
-                  ),
-                  style: Styles.inputTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ),]
+                  wFactor: 0.15,
+                  hint: 'x2',
+                  align: TextAlign.center,
+              )]
             ),
           ],
         ),
@@ -531,22 +487,18 @@ class _NeuralPageState extends State<NeuralPage> {
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
-                  children: <Widget>[FractionallySizedBox(
-                    widthFactor: 0.15,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (numb) {
-                        try{
-                          P = int.parse(numb);
-                        } catch (e) {
-                          P = null;
-                        }
-                        checkState();
-                      },
-                      style: TextStyle(fontSize: 20, color: Colors.black,),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),]
+                  children: <Widget>[CustomTextInput(
+                    onChanged: (numb) {
+                      try{
+                        P = int.parse(numb);
+                      } catch (e) {
+                        P = null;
+                      }
+                      checkState();
+                    },
+                    wFactor: 0.15,
+                    align: TextAlign.center,
+                  )]
                 ),
               ),
             ],
@@ -558,20 +510,28 @@ class _NeuralPageState extends State<NeuralPage> {
         Container(
           margin: const EdgeInsets.only(bottom: 20),
           child: Row(
-            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SupportFlatButtonText(text: "δ: "),
               Container(
+                // color: Theme.of(context).primaryColor,
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
                   children: <Widget>[new Center(
-                    child: new DropdownButton(
-                      items: delta_speed.map((double value) {
-                        return new DropdownMenuItem<double>(value: value, child: Text(value.toString()));
-                      }).toList(),
-                      value: currentSpeed,                      
-                      onChanged: updateSpeed,
+                    child: Theme(
+                      data: Theme.of(context).copyWith(canvasColor: Colors.orange),
+                      child: DropdownButton(
+                        // underline: null,
+                        items: delta_speed.map((double value) {
+                          return DropdownMenuItem<double>(
+                            value: value, 
+                            child: Text(value.toString())
+                          );
+                        }).toList(),
+                        // value: currentSpeed,
+                        hint: Text(currentSpeed.toString(), style: TextStyle(color: Colors.white)),              
+                        onChanged: updateSpeed,
+                      ),
                     ),
                   )]
                 ),
@@ -589,7 +549,14 @@ class _NeuralPageState extends State<NeuralPage> {
               Container(
                 child: new Column(
                   children: <Widget>[
-                    new Checkbox(value: dlValue, onChanged: dlValueChanged),
+                    Theme(
+                      data: Theme.of(context).copyWith(unselectedWidgetColor: Colors.white),
+                      child: Checkbox(
+                        value: dlValue, 
+                        onChanged: dlValueChanged,
+                        checkColor: Colors.black,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -599,7 +566,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     "deadline:",
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: dlValue ? Colors.black : Colors.grey[600],
+                        color: dlValue ? Colors.white : Colors.grey[600],
                         fontStyle: FontStyle.normal
                       ),
                   ),
@@ -611,11 +578,7 @@ class _NeuralPageState extends State<NeuralPage> {
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
-                  children: <Widget>[FractionallySizedBox(
-                    widthFactor: 0.2,
-                    child: TextField(
-                      controller: dlController,
-                      keyboardType: TextInputType.number,
+                  children: <Widget>[CustomTextInput(
                       onChanged: (numb) {
                         try{
                           deadline = int.parse(numb);
@@ -627,14 +590,12 @@ class _NeuralPageState extends State<NeuralPage> {
                         }
                         checkState();
                       },
-                      decoration: InputDecoration(
-                        hintText:'ms',
-                      ),
-                      style: Styles.inputTextStyle,
-                      textAlign: TextAlign.center,
+                      wFactor: 0.2,
+                      hint: 'ms',
+                      align: TextAlign.center,
                       enabled: dlValue,
-                    ),
-                  ),]
+                      controller: dlController,
+                  )]
                 ),
               ),
             ],
@@ -650,7 +611,14 @@ class _NeuralPageState extends State<NeuralPage> {
               Container(
                 child: new Column(
                   children: <Widget>[
-                    new Checkbox(value: iterValue, onChanged: iterValueChanged),
+                    Theme(
+                      data: Theme.of(context).copyWith(unselectedWidgetColor: Colors.white),
+                      child: Checkbox(
+                        value: iterValue, 
+                        onChanged: iterValueChanged,
+                        checkColor: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -660,7 +628,7 @@ class _NeuralPageState extends State<NeuralPage> {
                     "iterations: ",
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: iterValue ? Colors.black : Colors.grey[600],
+                        color: iterValue ? Colors.white : Colors.grey[600],
                         fontStyle: FontStyle.normal
                       ),
                   ),
@@ -672,11 +640,7 @@ class _NeuralPageState extends State<NeuralPage> {
               Container(
                 margin: const EdgeInsets.only(left: 15, right: 15),
                 child: Wrap(
-                  children: <Widget>[FractionallySizedBox(
-                    widthFactor: 0.2,
-                    child: TextField(
-                      controller: iterController,
-                      keyboardType: TextInputType.number,
+                  children: <Widget>[CustomTextInput(
                       onChanged: (numb) {
                         try{
                           iterations = int.parse(numb);
@@ -688,11 +652,11 @@ class _NeuralPageState extends State<NeuralPage> {
                         }
                         checkState();
                       },
-                      style: TextStyle(fontSize: 20, color: Colors.black,),
-                      textAlign: TextAlign.center,
+                      wFactor: 0.2,
+                      align: TextAlign.center,
                       enabled: iterValue,
-                    ),
-                  ),]
+                      controller: iterController,
+                  )]
                 ),
               ),
             ],
@@ -701,21 +665,9 @@ class _NeuralPageState extends State<NeuralPage> {
         //#endregion
 
         //#region Buttons and Results
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 20),
-          child: RaisedButton(
-            child: const Text(
-              'Compute',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            padding: const EdgeInsets.all(13),
-            color: Theme.of(context).accentColor,
-            elevation: 1.0,
-            splashColor: Colors.limeAccent,
-            onPressed: _computeButtonState,
-          ),
+        ActionRoundedButton(
+          name: 'Compute',
+          onPressed: _computeButtonState,
         ),
         
         Container(
@@ -725,46 +677,33 @@ class _NeuralPageState extends State<NeuralPage> {
           )
         ),
 
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 20),
-          child: RaisedButton(
-            child: const Text(
-              'Test learning speed',
-              style: TextStyle(
-                fontSize: 20,
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ActionRoundedButton(
+              name: 'Test learning',
+              onPressed: _goToTest,
+              marginVer: 0,
+              paddingVer: 12,
             ),
-            padding: const EdgeInsets.all(13),
-            color: Theme.of(context).accentColor,
-            elevation: 1.0,
-            splashColor: Colors.limeAccent,
-            onPressed: _goToTest,
-          ),
+            
+            ActionRoundedButton(
+              name: 'Upload',
+              onPressed: _testBtnEnable ? () {
+                _writeData(); 
+                getAppDir();
+                uploadFile();
+                setState(() {
+                  _uploadInfo = "File was uploaded!";
+                });
+              } : null,
+              marginVer: 0,
+              paddingVer: 12,
+              icon: Icon(Icons.file_upload),
+            ),
+          ]
         ),
 
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 20),
-          child: RaisedButton(
-            child: const Text(
-              'Upload',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            padding: const EdgeInsets.all(13),
-            color: Theme.of(context).accentColor,
-            elevation: 1.0,
-            splashColor: Colors.limeAccent,
-            onPressed: _testBtnEnable ? () {
-              _writeData(); 
-              getAppDir();
-              uploadFile();
-              setState(() {
-                _uploadInfo = "File was uploaded!";
-              });
-            } : null,
-          ),
-        ),
         Text(_uploadInfo),
         //#endregion
       ],
@@ -1055,6 +994,7 @@ class TestLearningSpeed extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(title: Text('Test learning speed')),
       body: CustomScrollView(
         slivers: <Widget>[
