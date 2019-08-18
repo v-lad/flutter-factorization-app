@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 @immutable
 class Styles {
 
-  static final inputTextStyle = TextStyle(fontSize: 20, color: Colors.black);
+  static final inputTextStyle = TextStyle(fontSize: 20, color: Colors.white);
     
   static final flatButtonStyle = TextStyle(
     fontSize: 20.0,
-    color: Colors.black,
+    color: Colors.white,
     fontStyle: FontStyle.normal,
   );
 
@@ -26,11 +26,26 @@ class Styles {
 
   static final infoTextStyle = TextStyle(
     fontSize: 18,
-    color: Colors.black,
+    color: Colors.white,
+  );
+
+  static final helperTextStyle = TextStyle(
+    fontSize: 13,
+    color: Color(0xff888888),
+  );
+
+  static final hintTextStyle = TextStyle(
+    fontSize: 18,
+    color: Color(0xff888888),
+  );
+
+  static final labelTextStyle = TextStyle(
+    color: Color(0xff888888),
   );
 
   static final resultBoldTextStyle = TextStyle(
-    fontWeight: FontWeight.bold,
     fontSize: 20.0,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   );
 }
