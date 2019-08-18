@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:collection/collection.dart';
@@ -66,11 +68,15 @@ class _GenAlgPageState extends State<GenAlgPage> {
           while (lsEqual(fitPerson, [])) {
             try {
               var t1 = DateTime.now().millisecondsSinceEpoch;
-              setState(() => fitPerson = geneticSearch());
-              setState(() => geneticTime = DateTime.now().millisecondsSinceEpoch - t1);
+              setState(() {
+                fitPerson = geneticSearch();
+                geneticTime = DateTime.now().millisecondsSinceEpoch - t1;
+              });
               var t2 = DateTime.now().millisecondsSinceEpoch;
-              setState(() => enumRes = enumerationSearch());
-              setState(() => enumTime = DateTime.now().millisecondsSinceEpoch - t2);
+              setState(() {
+                enumRes = enumerationSearch();
+                enumTime = DateTime.now().millisecondsSinceEpoch - t2;
+              });
               buildResult();
             } catch (e) {
               fitPerson = [];
@@ -90,9 +96,8 @@ class _GenAlgPageState extends State<GenAlgPage> {
         this._dismissKeyboard(context);
       },
       child: Scaffold(
-        appBar: AppBar (
-          title: Text('Genetic algorithms'),
-        ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar (title: Text('Genetic algorithms')),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverList(
@@ -106,14 +111,16 @@ class _GenAlgPageState extends State<GenAlgPage> {
     );
   }
 
-  void clearStates() {    
-    setState(() => resultWidgets= <Widget>[]);
-    setState(() => genWidgets = <Widget>[]);
-    setState(() => geneticTimeWidgets = <Widget>[]);
-    setState(() => enumResultWidgets = <Widget>[]);
-    setState(() => enumTimeWidgets = <Widget>[]);
-    setState(() => enumTitle = "");
-    setState(() => comparedString= "");
+  void clearStates() {
+    setState(() {
+      resultWidgets= <Widget>[];
+      genWidgets = <Widget>[];
+      geneticTimeWidgets = <Widget>[];
+      enumResultWidgets = <Widget>[];
+      enumTimeWidgets = <Widget>[];
+      enumTitle = "";
+      comparedString= "";
+    });
   }
 
 
@@ -132,54 +139,42 @@ class _GenAlgPageState extends State<GenAlgPage> {
           marginTop: 30,
         ),
         Container(
-          child: FractionallySizedBox(
-            widthFactor: 0.5,
-            child: TextField(
-              autofocus: true,
-              keyboardType: TextInputType.number,
-              onChanged: (numb) {
-                try {
-                  n = int.parse(numb);
-                  setState(() => exprWidgets = <Widget>[]);
-                  clearStates();
-                  buildExpression(n);
-                } catch (e) {
-                  setState(() => exprWidgets = <Widget>[]);
-                  clearStates();
-                  setState(() => result = null);
-                  setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
-                }
-              },
-              decoration: InputDecoration(
-                labelText: 'Count of variables',
-                // hintText: 'Enter here...',
-                alignLabelWithHint: true,
-              ),
-              style: Styles.inputTextStyle,
-              textAlign: TextAlign.center,
-            ),
+          child: CustomTextInput(
+            onChanged: (numb) {
+              try {
+                n = int.parse(numb);
+                setState(() => exprWidgets = <Widget>[]);
+                clearStates();
+                buildExpression(n);
+              } catch (e) {
+                clearStates();
+                setState(() {
+                  exprWidgets = <Widget>[];
+                  result = null;
+                  _computeButtonEnable = !(params.contains(null)) && result != null;
+                });
+              }
+            },
+            align: TextAlign.center,
+            alignLabel: true,
+            label: 'Count of variables',
+            autofocus: true,
+            wFactor: 0.5,
+            helperText: '26 max',
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
-        Wrap(
-          direction: Axis.horizontal,
-          children: exprWidgets,
+        StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Wrap(
+              direction: Axis.horizontal,
+              children: exprWidgets,
+            );
+          }
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 20),
-          child: RaisedButton(
-            child: const Text(
-              'Compute',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            padding: const EdgeInsets.all(13),
-            color: Theme.of(context).accentColor,
-            elevation: 1.0,
-            splashColor: Colors.limeAccent,
-            onPressed: _computeButtonState,
-          ),
+        ActionRoundedButton(
+          name: 'Compute',
+          onPressed: _computeButtonState,
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
@@ -206,10 +201,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
             enumTitle,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+            style: Styles.resultBoldTextStyle,
           ),
         ),
         Container(
@@ -230,10 +222,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
           margin: const EdgeInsets.only(bottom: 10),
           child: Text(
             comparedString,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+            style: Styles.resultBoldTextStyle,
           ),
         ),
       ],
@@ -241,20 +230,19 @@ class _GenAlgPageState extends State<GenAlgPage> {
   }
 
   void buildResult() {
-    String alph = "abcdefghijklmnopqrstuvwxyz";
-    List<String> alphabet = alph.split('');
+    AsciiCodec asciiCustom = AsciiCodec();
+    String alphabet = asciiCustom.decode([for (int i = 97; i <= 122; i++) i]);  // "abcdf...z"
     List<Widget> expression = [];
     List<Widget> expressionGenCount = [];
     List<Widget> expressionGenTime = [];
     List<Widget> expressionEnumRes = [];
     List<Widget> expressionEnumTime = [];
+    
 
     expression.add(
       Text(
         "Result: ",
-        style: TextStyle(
-          fontSize: 20,
-        ),
+        style: Styles.flatButtonStyle,
       ),
     );
 
@@ -265,10 +253,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
           children: <Widget>[
             Text(
               govnocode,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+              style: Styles.resultBoldTextStyle,
             ),
           ],
         )
@@ -278,46 +263,33 @@ class _GenAlgPageState extends State<GenAlgPage> {
     expressionGenCount.addAll([
       Text(
         "Generation count: ",
-        style: TextStyle(
-          fontSize: 20,
-        ),
+        style: Styles.flatButtonStyle,
       ),
       Text(
         generationCount.toString(),
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),
+        style: Styles.resultBoldTextStyle,
       ),
     ]);
 
     expressionGenTime.addAll([
       Text(
         "Genetic alg. time: ",
-        style: TextStyle(
-          fontSize: 20,
-        ),
+        style: Styles.flatButtonStyle,
       ),
       Text(
         geneticTime.toString() + ' ms',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),
+        style: Styles.resultBoldTextStyle,
       ),
     ]);
 
     for (var i = 0; i < enumRes.length; i++) {
-      var govnocode = i != enumRes.length-1 ? alphabet[i]+'='+enumRes[i].toString()+', ' : alphabet[i]+'='+enumRes[i].toString();
+      var lastElementParse = i != enumRes.length-1 ? alphabet[i]+'='+enumRes[i].toString()+', ' : alphabet[i]+'='+enumRes[i].toString();
       expressionEnumRes.add(
         Stack(
           children: <Widget>[
             Text(
-              govnocode,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+              lastElementParse,
+              style: Styles.resultBoldTextStyle,
             ),
           ],
         )
@@ -327,56 +299,47 @@ class _GenAlgPageState extends State<GenAlgPage> {
     expressionEnumTime.addAll([
       Text(
         "Enumeration time: ",
-        style: TextStyle(
-          fontSize: 20,
-        ),
+        style: Styles.flatButtonStyle,
       ),
       Text(
         enumTime.toString() + ' ms',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),
+        style: Styles.resultBoldTextStyle,
       ),
     ]);
 
-    setState(() => resultWidgets = expression);
-    setState(() => genWidgets = expressionGenCount);
-    setState(() => geneticTimeWidgets = expressionGenTime);
-    setState(() => enumTitle = "Enumeration results:");
-    setState(() => enumResultWidgets = expressionEnumRes);
-    setState(() => enumTimeWidgets = expressionEnumTime);
-    setState(() => comparedString = enumTime > geneticTime ? 'Genetic alg. is faster' : 'Enumeration is faster');
+    setState(() {
+      resultWidgets = expression;
+      genWidgets = expressionGenCount;
+      geneticTimeWidgets = expressionGenTime;
+      enumTitle = "Enumeration results:";
+      enumResultWidgets = expressionEnumRes;
+      enumTimeWidgets = expressionEnumTime;
+      comparedString = enumTime > geneticTime ? 'Genetic alg. is faster' : 'Enumeration is faster';
+    });
   }
 
   void buildExpression(int n) {
-    String alph = "abcdefghijklmnopqrstuvwxyz";
-    List<String> alphabet = alph.split('');
+    AsciiCodec asciiCustom = AsciiCodec();
+    String alphabet = asciiCustom.decode([for (int i = 97; i <= 122; i++) i]);  // "abcdf...z"
     List<Widget> expression = [];
     params = new List(n);
     result = null;
     setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
 
     for (var i = 0; i < n; i++) {
-      expression.add(Wrap(children: <Widget>[FractionallySizedBox(
-            widthFactor: 0.10,
-            child: TextField(
-              keyboardType: TextInputType.number,
-              onChanged: (numb) {
-                try{
-                  params[i] = int.parse(numb);
-                } catch (e) {
-                  params[i] = null;
-                }
-                setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
-              },
-              decoration: InputDecoration(
-                hintText:'p${i}',
-              ),
-              style: Styles.inputTextStyle,
-              textAlign: TextAlign.end,
-            ),
-          ),]
+      expression.add(Wrap(children: <Widget>[CustomTextInput(
+            onChanged: (numb) {
+              try{
+                params[i] = int.parse(numb);
+              } catch (e) {
+                params[i] = null;
+              }
+              setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
+            },
+            wFactor: 0.1,
+            hint: 'p$i',
+            align: TextAlign.end,
+          )]
         ),
       );
       expression.add(
@@ -394,26 +357,20 @@ class _GenAlgPageState extends State<GenAlgPage> {
       SupportFlatButtonText(text: " = "),
     );
 
-    expression.add(Wrap(children: <Widget>[FractionallySizedBox(
-          widthFactor: 0.13,
-          child: TextField(
-            keyboardType: TextInputType.number,
-            onChanged: (numb) {
-              try {
-                result = int.parse(numb);
-              } catch (e) {                
-                result = null;
-              }
-              setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
-            },
-            decoration: InputDecoration(
-              hintText: 'N',
-            ),
-            style: Styles.inputTextStyle,
-          ),
-        ),]
-      ),
-    );
+    expression.add(Wrap(children: <Widget>[CustomTextInput(
+        onChanged: (numb) {
+          try {
+            result = int.parse(numb);
+          } catch (e) {                
+            result = null;
+          }
+          setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
+        },
+        wFactor: 0.13,
+        hint: 'N',
+        align: TextAlign.start,
+      )]
+    ));
     
     // return expression;
     setState(() => exprWidgets = expression); 
@@ -443,12 +400,12 @@ class _GenAlgPageState extends State<GenAlgPage> {
   }
 
   List<int> enumerationSearch() {
-    String alph = "abcdefghijklmnopqrstuvwxyz";
-    List<String> alphabet = alph.split('');
+    AsciiCodec ascii = AsciiCodec();
+    String alphabet = ascii.decode([for (var i=97; i <= 122; i++) i]);
     int parCount = params.length;
     enumValues = new LinkedHashMap();
     List<int> temp = new List(params.length);
-    int maxVal = result ~/ maxValue(params);
+    int maxVal = result ~/ maxValue(params);                                                                                
 
     for (var i = 0; i < parCount; i++) {
       enumValues[alphabet[i]] = 1;
@@ -508,21 +465,21 @@ class _GenAlgPageState extends State<GenAlgPage> {
       if (deltas.contains(0)) {
         return currentGen[deltas.indexOf(0)];
       }
-
+      
       probabilities = countProbabilities();
       nextParents = generateNextParents();
 
       nextGen = [];
       List<int> tmpChild;
-
-      for (var parent in nextParents) {
+      
+      for (var parent in nextParents) {        
         tmpChild = crossOne(parent);
         if (nextGen.every((p)=>lsEqual(p, tmpChild))) {
           tmpChild = mutateOne(tmpChild);
         }
         nextGen.add(tmpChild);
       }
-
+      print(1);
       currentGen = nextGen;
     }
   }
@@ -615,6 +572,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
     childPer.addAll(motherPer.getRange(divider, motherPer.length));
 
     while (currentGen.map((p) => lsEqual(p, childPer)).toList().every((p)=>p==true)) {
+      print(childPer);
       childPer = mutateOne(childPer);
     }
 
@@ -630,8 +588,8 @@ class _GenAlgPageState extends State<GenAlgPage> {
       ind2 = rand.nextInt(person.length);
     }
 
-    newPerson[ind1] = rand.nextInt(result ~/ maxValue(params))+1;
-    newPerson[ind2] = rand.nextInt(result ~/ maxValue(params))+1;
+    newPerson[ind1] = rand.nextInt((result ~/ maxValue(params)) + 1)+1;
+    newPerson[ind2] = rand.nextInt((result ~/ maxValue(params)) + 1)+1;
 
     return newPerson;
   }
