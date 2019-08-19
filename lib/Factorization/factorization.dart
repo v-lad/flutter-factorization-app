@@ -13,6 +13,7 @@ class _FactorizationPageState extends State<FactorizationPage> {
   int n, result;
   List<String> primes = [];
   List<int> intPrimes = [];
+  bool isButtonEnable;
 
   int factorSingle(int numb) {
     var i = 2;
@@ -98,21 +99,31 @@ class _FactorizationPageState extends State<FactorizationPage> {
       children: <Widget> [
         PageTitle(title: "Factorize a number"),
         PageInfo(
-          text: "${'\t'*4}" + "lorem ipsum dolor sit amet",
+          text: "${'\t'*4}" + "Get factorization of entered number "
+          "(decomposition by prime factors) via trial division algorithm ",
         ),
         Center(
           child: Column(
             children: <Widget>[
               CustomTextInput(
-                onChanged: (numb) { n = int.parse(numb); },
+                onChanged: (numb) {
+                  try{
+                    var parsed = int.parse(numb);
+                    n = parsed >= 1 ? parsed : throw Exception('Bad number');
+                    setState(() => isButtonEnable = true);
+                  } catch (e) {
+                    setState(() => isButtonEnable = false);
+                  }
+                },
                 label: 'Input a number',
                 autofocus: true,
                 alignLabel: true,
+                helperText: 'Must be >= 1',
               ),
 
               ActionRoundedButton(
                 name: 'Compute',
-                onPressed: () { factorizeNumber(n); },
+                onPressed: isButtonEnable ?? false ? () { factorizeNumber(n); } : null,
               ),
             ],
           )

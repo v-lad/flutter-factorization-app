@@ -14,6 +14,7 @@ import 'package:http/io_client.dart';
 
 import '../styles.dart';
 import '../widgets.dart';
+import 'widgets.dart';
 
 class NeuralPage extends StatefulWidget {
 
@@ -130,18 +131,14 @@ class _NeuralPageState extends State<NeuralPage> {
     widgets.add(
       Text(
         "Result: ",
-        style: TextStyle(
-          fontSize: 20,
-        ),
+        style: Styles.resultBoldTextStyle,
       ),
     );
 
     widgets.add(      
       Text(
         results[0],
-        style: TextStyle(
-          fontSize: 16,
-        ),
+        style: Styles.smallTextStyle,
       ),
     );
 
@@ -151,17 +148,11 @@ class _NeuralPageState extends State<NeuralPage> {
           children: <Widget>[
             Text(
               "W1: " + results[1].toStringAsFixed(5) + "; ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-              ),
+              style: Styles.smallBoldTextStyle,
             ),
             Text(
               "W2: " + results[2].toStringAsFixed(5),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-              ),
+              style: Styles.smallBoldTextStyle,
             ),
           ],
         )
@@ -170,18 +161,14 @@ class _NeuralPageState extends State<NeuralPage> {
       widgets.add(
         Text(
           "Time: " + results[4].toString(),
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: Styles.smallTextStyle,
         ),
       );
 
       widgets.add(
         Text(
           "Steps: " + results[3].toString(),
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: Styles.smallTextStyle,
         ),
       );
     } else {
@@ -190,11 +177,8 @@ class _NeuralPageState extends State<NeuralPage> {
         var tmp = results[i].toStringAsFixed(5);
         y_s.add(
           Text(
-            "y${i}: " + (tmp == "NaN" ? (i <= 2 ? "-infinity" : "infinity") : tmp) + (i == 4 ? "" : "; "),
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold
-            ),
+            "y$i: " + (tmp == "NaN" ? (i <= 2 ? "-infinity" : "infinity") : tmp) + (i == 4 ? "" : "; "),
+            style: Styles.smallBoldTextStyle,
           )
         );
       }
@@ -211,17 +195,11 @@ class _NeuralPageState extends State<NeuralPage> {
           children: <Widget>[
             Text(
               "W1: " + (tmp1 == "NaN" ? "infinity" : tmp1) + "; ",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-              ),
+              style: Styles.smallBoldTextStyle,
             ),
             Text(
               "W2: " + (tmp2 == "NaN" ? "infinity" : tmp2),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold
-              ),
+              style: Styles.smallBoldTextStyle,
             ),
           ],
         )
@@ -230,18 +208,14 @@ class _NeuralPageState extends State<NeuralPage> {
       widgets.add(
         Text(
           "Time: " + results[2].toString(),
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: Styles.smallTextStyle,
         ),
       );
 
       widgets.add(
         Text(
           "Steps: " + results[1].toString(),
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: Styles.smallTextStyle,
         ),
       );
     }
@@ -256,8 +230,10 @@ class _NeuralPageState extends State<NeuralPage> {
     // #region Build
     if (_computeButtonEnable) {
       _computeButtonState = () {
-        setState(() => beginTime = DateTime.now().millisecondsSinceEpoch);
-        setState(() => results = compute());
+        setState(() {
+          beginTime = DateTime.now().millisecondsSinceEpoch;
+          results = compute();
+        });
         buildResults();
         };
     } else {
@@ -305,7 +281,7 @@ class _NeuralPageState extends State<NeuralPage> {
     return new Column(
       children: <Widget>[
         PageTitle(title:"Perceptron"),
-        PageInfo(text: "${'\t'*4}" + 'lorem ipsum'),
+        PageInfo(text: "${'\t'*4}" + 'Something like perceptron (questionably)'),
         PageSubtitle(
           text: "Enter the data:",
           marginTop: 30,
@@ -693,9 +669,9 @@ class _NeuralPageState extends State<NeuralPage> {
                 _writeData(); 
                 getAppDir();
                 uploadFile();
-                setState(() {
-                  _uploadInfo = "File was uploaded!";
-                });
+                // setState(() {
+                //   _uploadInfo = "File was uploaded!";
+                // });
               } : null,
               marginVer: 0,
               paddingVer: 12,
@@ -850,18 +826,6 @@ class _NeuralPageState extends State<NeuralPage> {
     });
   }
   //#endregion
-
-  // Future getCredentials() async {
-
-  //   var credentialsString = await rootBundle.loadString('assets/credentials.json');
-
-  //   setState(() {
-  //     credentialsS = credentialsString;
-  //     // print(credentialsS);
-  //     credentials = jsonDecode(credentialsS);
-  //     print(credentials);
-  //   });
-  // }
 }
 
 class TestLearningSpeed extends StatelessWidget {
@@ -916,12 +880,7 @@ class TestLearningSpeed extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                   "δ:",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Styles.resultBoldTextStyle,
               ),
             ),
           ),
@@ -930,12 +889,7 @@ class TestLearningSpeed extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                   "iterations:",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Styles.resultBoldTextStyle,
               ),
             ),
           )
@@ -950,11 +904,7 @@ class TestLearningSpeed extends StatelessWidget {
                 child: Center(
                   child: Text(
                     delta_speed[i].toString(),
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.normal
-                    ),
+                    style: Styles.flatButtonStyle,
                   ),
                 ),
               ),
@@ -965,11 +915,7 @@ class TestLearningSpeed extends StatelessWidget {
                 child: Center(
                   child: Text(
                       results[i].toString(),
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontStyle: FontStyle.normal,
-                      ),
+                      style: Styles.flatButtonStyle,
                   ),
                 ),
               ),
@@ -986,7 +932,6 @@ class TestLearningSpeed extends StatelessWidget {
         data: graphData,
         domainFn: (LinearResults lr, _) => lr.speed.toString(),
         measureFn: (LinearResults lr, _) => lr.iters,
-        // colorFn: (LinearResults lr, _) => charts.ColorUtil.fromDartColor(Colors.deepOrangeAccent),
         colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
         fillPatternFn: (_, __) => charts.FillPatternType.forwardHatch,
         id: 'Iterations'
@@ -1004,13 +949,8 @@ class TestLearningSpeed extends StatelessWidget {
 
                 Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 10),
-                  child: Text(
-                    "Test results",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.orangeAccent[700],
-                    ),
+                  child: PageTitle(
+                    title: "Test results",
                   ),
                 ),
 
@@ -1029,19 +969,14 @@ class TestLearningSpeed extends StatelessWidget {
                     constraints: BoxConstraints(maxHeight: 400.0),
                     child: Center(
                       child: Column(children: <Widget>[
-                        Text(
-                          "Iterations dependency:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                        ),
+                        PageSubtitle(text: "Iterations dependency:"),
                         Expanded(
                           child: charts.BarChart(
                             _seriesGraphData,
                             animate: true,
-                            animationDuration: Duration(seconds: 5),
+                            animationDuration: Duration(seconds: 4),
+                            domainAxis: ChartXLabelStyle().build(),
+                            primaryMeasureAxis: ChartYLabelStyle().build(),
                           ),
                         )
                       ],),

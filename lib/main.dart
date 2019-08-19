@@ -16,12 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.orange[800],
         primarySwatch: Colors.deepOrange,
-
-        // textTheme: TextTheme(
-        //   title: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.orangeAccent[700],),
-        //   supportingText: TextStyle(),
-          
-        // ),
+        backgroundColor: Color(0xff062e32),
+         
       ),
       home: HomePage(),
       routes: <String, WidgetBuilder> {
@@ -38,6 +34,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {    
     return new Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: new AppBar(
         title: Text('RTS'),
       ),
