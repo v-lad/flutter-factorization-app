@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart';
-// import 'package:googleapis_auth/auth_io.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:io' as io;
@@ -11,6 +10,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart'
     show BaseRequest, Response, StreamedResponse;
 import 'package:http/io_client.dart';
+import 'package:groovin_material_icons/groovin_material_icons.dart' as gicons;
 
 import '../styles.dart';
 import '../widgets.dart';
@@ -675,7 +675,7 @@ class _NeuralPageState extends State<NeuralPage> {
               } : null,
               marginVer: 0,
               paddingVer: 12,
-              icon: Icon(Icons.file_upload),
+              icon: Icon(gicons.GroovinMaterialIcons.google_drive),
             ),
           ]
         ),
