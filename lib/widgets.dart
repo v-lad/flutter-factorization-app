@@ -223,3 +223,19 @@ class CustomTextInput extends StatelessWidget {
     );
   }
 }
+
+class StatefulBuilderWrapper extends StatelessWidget {
+
+  StatefulBuilderWrapper({@required this.widget});
+
+  final Widget widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        return this.widget;
+      },
+    );
+  }
+}
