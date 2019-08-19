@@ -63,7 +63,7 @@ class PageInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: this.paddingLeft ?? 6.0, right: this.paddingRight ?? 6.0),
+      padding: EdgeInsets.only(left: this.paddingLeft ?? 8.0, right: this.paddingRight ?? 8.0),
       child: Row(
         mainAxisSize: (this.isSizeMin ?? false) ? MainAxisSize.min : MainAxisSize.max,
         children: <Widget>[
