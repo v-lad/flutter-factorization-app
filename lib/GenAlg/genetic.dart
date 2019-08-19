@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -33,7 +34,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
   static int result;
 
   var _computeButtonState;
-  bool _computeButtonEnable = !(params.contains(null)) && result != null ? true:false;
+  bool _computeButtonEnable;
   
   List<List<int>> firstGen;
   List<List<int>> currentGen;
@@ -58,7 +59,8 @@ class _GenAlgPageState extends State<GenAlgPage> {
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+    _computeButtonEnable = (n != null && !(params.contains(null)) && result != null) ? true:false;
 
     if (_computeButtonEnable) {
       _computeButtonState = () {
@@ -142,7 +144,8 @@ class _GenAlgPageState extends State<GenAlgPage> {
           child: CustomTextInput(
             onChanged: (numb) {
               try {
-                n = int.parse(numb);
+                var temp = int.parse(numb);
+                n = (temp > 1) ? temp : throw Exception("Bad number");
                 setState(() => exprWidgets = <Widget>[]);
                 clearStates();
                 buildExpression(n);
@@ -160,17 +163,15 @@ class _GenAlgPageState extends State<GenAlgPage> {
             label: 'Count of variables',
             autofocus: true,
             wFactor: 0.5,
-            helperText: '26 max',
+            helperText: '26 max and must be >= 2',
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
-        StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Wrap(
-              direction: Axis.horizontal,
-              children: exprWidgets,
-            );
-          }
+        StatefulBuilderWrapper(
+          widget: Wrap(
+            direction: Axis.horizontal,
+            children: exprWidgets,
+          ),
         ),
         ActionRoundedButton(
           name: 'Compute',
@@ -178,23 +179,29 @@ class _GenAlgPageState extends State<GenAlgPage> {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: resultWidgets,
+          child: StatefulBuilderWrapper(
+            widget: Wrap(
+              direction: Axis.horizontal,
+              children: resultWidgets,
+            ),
+          )
+        ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          child: StatefulBuilderWrapper(
+            widget: Wrap(
+              direction: Axis.horizontal,
+              children: genWidgets,
+            ),
           ),
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: genWidgets,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: geneticTimeWidgets,
+          child: StatefulBuilderWrapper(
+            widget: Wrap(
+              direction: Axis.horizontal,
+              children: geneticTimeWidgets,
+            ),
           ),
         ),
         Container(
@@ -206,16 +213,20 @@ class _GenAlgPageState extends State<GenAlgPage> {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: enumResultWidgets,
+          child: StatefulBuilderWrapper(
+            widget: Wrap(
+              direction: Axis.horizontal,
+              children: enumResultWidgets,
+            ),
           ),
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15),
-          child: Wrap(
-            direction: Axis.horizontal,
-            children: enumTimeWidgets,
+          child: StatefulBuilderWrapper(
+            widget: Wrap(
+              direction: Axis.horizontal,
+              children: enumTimeWidgets,
+            ),
           ),
         ),
         Container(
@@ -237,7 +248,6 @@ class _GenAlgPageState extends State<GenAlgPage> {
     List<Widget> expressionGenTime = [];
     List<Widget> expressionEnumRes = [];
     List<Widget> expressionEnumTime = [];
-    
 
     expression.add(
       Text(
@@ -247,12 +257,12 @@ class _GenAlgPageState extends State<GenAlgPage> {
     );
 
     for (var i = 0; i < fitPerson.length; i++) {
-      var govnocode = i != fitPerson.length-1 ? alphabet[i]+'='+fitPerson[i].toString()+', ' : alphabet[i]+'='+fitPerson[i].toString();
+      var lastElementParsed = i != fitPerson.length-1 ? alphabet[i]+'='+fitPerson[i].toString()+', ' : alphabet[i]+'='+fitPerson[i].toString();
       expression.add(
         Stack(
           children: <Widget>[
             Text(
-              govnocode,
+              lastElementParsed,
               style: Styles.resultBoldTextStyle,
             ),
           ],
@@ -283,12 +293,12 @@ class _GenAlgPageState extends State<GenAlgPage> {
     ]);
 
     for (var i = 0; i < enumRes.length; i++) {
-      var lastElementParse = i != enumRes.length-1 ? alphabet[i]+'='+enumRes[i].toString()+', ' : alphabet[i]+'='+enumRes[i].toString();
+      var lastElementParsed = i != enumRes.length-1 ? alphabet[i]+'='+enumRes[i].toString()+', ' : alphabet[i]+'='+enumRes[i].toString();
       expressionEnumRes.add(
         Stack(
           children: <Widget>[
             Text(
-              lastElementParse,
+              lastElementParsed,
               style: Styles.resultBoldTextStyle,
             ),
           ],
@@ -324,7 +334,7 @@ class _GenAlgPageState extends State<GenAlgPage> {
     List<Widget> expression = [];
     params = new List(n);
     result = null;
-    setState(() => _computeButtonEnable = !(params.contains(null)) && result != null);
+    setState(() => _computeButtonEnable = !(params.contains(null)) && result != null && n != null);
 
     for (var i = 0; i < n; i++) {
       expression.add(Wrap(children: <Widget>[CustomTextInput(
@@ -479,7 +489,6 @@ class _GenAlgPageState extends State<GenAlgPage> {
         }
         nextGen.add(tmpChild);
       }
-      print(1);
       currentGen = nextGen;
     }
   }
@@ -572,7 +581,6 @@ class _GenAlgPageState extends State<GenAlgPage> {
     childPer.addAll(motherPer.getRange(divider, motherPer.length));
 
     while (currentGen.map((p) => lsEqual(p, childPer)).toList().every((p)=>p==true)) {
-      print(childPer);
       childPer = mutateOne(childPer);
     }
 
