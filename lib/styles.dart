@@ -48,4 +48,15 @@ class Styles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
+
+  static final smallTextStyle = TextStyle(
+    fontSize: 16,
+    color: Colors.white,
+  );
+
+  static final smallBoldTextStyle = TextStyle(
+    fontSize: 16,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 }
